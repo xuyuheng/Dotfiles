@@ -1,0 +1,30 @@
+[user]
+	name = Yuheng
+	email = yuheng0905@gmail.com
+[core]
+	excludesfile = /Users/Yuheng/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[alias]
+	st = status
+	co = checkout
+	rb = rebase
+	br = branch
+	ph = push
+	lgg = log --oneline --decorate --graph
+	crpk = cherry-pick
+	prb = pull --rebase
+	sb = submodule
+	lgga = log --format=\"%C(auto)%h %C(auto)%an %C(auto)%d %Creset%s\" --graph
+	lggat = log --format=\"%C(auto)%h %C(auto)%an %C(auto)%d %Creset%s %Cgreen%cd %Creset\" --graph
+	changelog = log --format=\"* %s %an\"
+	lgsl = log --stat --oneline
+	lgs = log --stat
+	lgsd = log --stat --decorate
+	ci = commit
+[push]
+	default = simple
