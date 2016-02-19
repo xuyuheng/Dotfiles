@@ -14,6 +14,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'klen/python-mode'
+Plugin 'vim-scripts/taglist.vim'
+Plugin 'sjl/gundo.vim'
 " Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 call vundle#end()
 filetype plugin indent on
@@ -45,7 +47,6 @@ if has('gui_running')
 else
   colorscheme zenburn
 endif
-call togglebg#map("<F4>")
 
 inoremap <C-U> <C-G>u<C-U>
 
@@ -57,3 +58,10 @@ let mapleader=" "
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 let g:ctrlp_working_path_mode='c'
+
+nnoremap <F6> :GundoToggle<CR>
+let g:gundo_width = 60
+let g:gundo_preview_height = 40
+let g:gundo_right = 1
+
+let Tlist_Use_Right_Window = 1
