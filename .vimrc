@@ -6,16 +6,17 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-" Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
 Plugin 'jistr/vim-nerdtree-tabs'
-" Plugin 'tpope/vim-vinegar'
 Plugin 'kien/ctrlp.vim'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'klen/python-mode'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'sjl/gundo.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'klen/python-mode'
+" Plugin 'Valloric/YouCompleteMe'
+" Plugin 'tpope/vim-vinegar'
 " Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 call vundle#end()
 filetype plugin indent on
@@ -36,6 +37,8 @@ set incsearch		" do incremental searching
 set number
 set clipboard=unnamed
 set nofoldenable
+set noshowmode
+autocmd FileType python setlocal completeopt-=preview
 
 if has('mouse')
   set mouse=a
@@ -50,18 +53,31 @@ endif
 
 inoremap <C-U> <C-G>u<C-U>
 
-let mapleader=" "
+let mapleader=","
 
+" Rope
+let g:pymode_doc = 0
+let g:pymode_rope = 0 
+let g:pymode_virtualenv = 0
+
+" Jedi
+let g:jedi#use_splits_not_buffers = "left"
+let g:jedi#show_call_signatures = "2"
+
+" YouCompleteMe
 " let g:ycm_autoclose_preview_window_after_completion=1
 " map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+" NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 map <Leader>n <plug>NERDTreeTabsToggle<CR>
 let g:ctrlp_working_path_mode='c'
 
+" Gundo
 nnoremap <F6> :GundoToggle<CR>
 let g:gundo_width = 60
 let g:gundo_preview_height = 40
 let g:gundo_right = 1
 
+" Taglist
 let Tlist_Use_Right_Window = 1
