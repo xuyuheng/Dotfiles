@@ -13,11 +13,9 @@ Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'vim-scripts/taglist.vim'
 Plugin 'sjl/gundo.vim'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'klen/python-mode'
+" Plugin 'davidhalter/jedi-vim'
 " Plugin 'Valloric/YouCompleteMe'
-" Plugin 'tpope/vim-vinegar'
-" Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -53,16 +51,22 @@ endif
 
 inoremap <C-U> <C-G>u<C-U>
 
+"split navigations
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
 let mapleader=","
 
 " Rope
-let g:pymode_doc = 0
-let g:pymode_rope = 0 
-let g:pymode_virtualenv = 0
+let g:pymode_rope_autoimport = 1
+let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime', 'pandas']
+" let g:pymode_rope_autoimport_import_after_complete = 1
 
 " Jedi
-let g:jedi#use_splits_not_buffers = "left"
-let g:jedi#show_call_signatures = "2"
+" let g:jedi#use_splits_not_buffers = "left"
+" let g:jedi#show_call_signatures = "2"
 
 " YouCompleteMe
 " let g:ycm_autoclose_preview_window_after_completion=1
