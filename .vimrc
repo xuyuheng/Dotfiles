@@ -7,15 +7,22 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'kien/ctrlp.vim'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'vim-scripts/taglist.vim'
-Plugin 'sjl/gundo.vim'
 Plugin 'klen/python-mode'
-" Plugin 'davidhalter/jedi-vim'
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'rizzatti/dash.vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'sirver/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'tpope/vim-surround'
+Plugin 'mattn/emmet-vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'sjl/gundo.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'fisadev/vim-isort'
+Plugin 'glench/vim-jinja2-syntax'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -36,6 +43,7 @@ set number
 set clipboard=unnamed
 set nofoldenable
 set noshowmode
+
 autocmd FileType python setlocal completeopt-=preview
 
 if has('mouse')
@@ -44,6 +52,7 @@ endif
 
 if has('gui_running')
   set background=dark
+  set guifont=Monaco:h12
   colorscheme solarized
 else
   colorscheme zenburn
@@ -59,29 +68,36 @@ nnoremap <C-H> <C-W><C-H>
 
 let mapleader=","
 
+" Dash
+nmap <silent> <leader>d <Plug>DashSearch
+
 " Rope
-let g:pymode_rope_autoimport = 1
-let g:pymode_rope_autoimport_modules = ['os', 'shutil', 'datetime', 'pandas']
-" let g:pymode_rope_autoimport_import_after_complete = 1
-
-" Jedi
-" let g:jedi#use_splits_not_buffers = "left"
-" let g:jedi#show_call_signatures = "2"
-
-" YouCompleteMe
-" let g:ycm_autoclose_preview_window_after_completion=1
-" map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:pymode_rope_goto_definition_cmd = 'vnew'
 
 " NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-map <Leader>n <plug>NERDTreeTabsToggle<CR>
-let g:ctrlp_working_path_mode='c'
+map <Leader>n :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" ctrlp
+let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+    \ 'file': '\v\.(exe|so|dll|py\~|pyc|pyo)$' }
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
 
 " Gundo
-nnoremap <F6> :GundoToggle<CR>
-let g:gundo_width = 60
-let g:gundo_preview_height = 40
-let g:gundo_right = 1
+nnoremap <F5> :GundoToggle<CR>
 
-" Taglist
-let Tlist_Use_Right_Window = 1
+" solarized
+call togglebg#map("<F6>")
+
+" UltiSnips
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsJumpForwardTrigger = '<C-B>'
+let g:UltiSnipsJumpBackwardTrigger = '<C-Z>'
+autocmd FileType python set ft=python.django
+autocmd FileType html set ft=html.django

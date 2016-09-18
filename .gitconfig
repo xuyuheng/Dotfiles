@@ -3,6 +3,7 @@
 	email = yuheng0905@gmail.com
 [core]
 	excludesfile = /Users/Yuheng/.gitignore_global
+	editor = /usr/local/bin/vim
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -28,3 +29,9 @@
 	ci = commit
 [push]
 	default = simple
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[merge]
+	conflictStyle = diff3
