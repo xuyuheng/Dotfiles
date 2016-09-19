@@ -10,7 +10,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'klen/python-mode'
+" Plugin 'klen/python-mode'
 Plugin 'rizzatti/dash.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'sirver/ultisnips'
@@ -23,6 +23,9 @@ Plugin 'sjl/gundo.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'fisadev/vim-isort'
 Plugin 'glench/vim-jinja2-syntax'
+Plugin 'embear/vim-localvimrc'
+Plugin 'valloric/youcompleteme'
+Plugin 'scrooloose/syntastic'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -44,7 +47,13 @@ set clipboard=unnamed
 set nofoldenable
 set noshowmode
 
-autocmd FileType python setlocal completeopt-=preview
+" python
+autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
+\ formatoptions=croqj softtabstop=4 textwidth=74 comments=:#\:,:#
+let python_highlight_all=1
+
+" vim
+autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=8 softtabstop=2
 
 if has('mouse')
   set mouse=a
@@ -72,7 +81,8 @@ let mapleader=","
 nmap <silent> <leader>d <Plug>DashSearch
 
 " Rope
-let g:pymode_rope_goto_definition_cmd = 'vnew'
+let g:pymode_rope_goto_definition_cmd='vnew'
+let g:pymode_rope_lookup_project=0
 
 " NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
@@ -93,11 +103,24 @@ nmap <F8> :TagbarToggle<CR>
 nnoremap <F5> :GundoToggle<CR>
 
 " solarized
-call togglebg#map("<F6>")
+call togglebg#map('<F6>')
 
 " UltiSnips
-let g:UltiSnipsExpandTrigger = '<tab>'
-let g:UltiSnipsJumpForwardTrigger = '<C-B>'
-let g:UltiSnipsJumpBackwardTrigger = '<C-Z>'
+let g:UltiSnipsExpandTrigger='<C-J>'
+let g:UltiSnipsListSnippets='<C-K>'
+let g:UltiSnipsJumpForwardTrigger='<C-J>'
+let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
 autocmd FileType python set ft=python.django
 autocmd FileType html set ft=html.django
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_check_on_wq = 0
