@@ -10,7 +10,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
-" Plugin 'klen/python-mode'
 Plugin 'rizzatti/dash.vim'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'sirver/ultisnips'
@@ -26,6 +25,7 @@ Plugin 'glench/vim-jinja2-syntax'
 Plugin 'embear/vim-localvimrc'
 Plugin 'valloric/youcompleteme'
 Plugin 'scrooloose/syntastic'
+Plugin 'jmcomets/vim-pony'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -46,6 +46,8 @@ set number
 set clipboard=unnamed
 set nofoldenable
 set noshowmode
+set completeopt-=preview
+set colorcolumn=80
 
 " python
 autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
@@ -75,6 +77,8 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+nmap <leader>l :set list!<CR>
+
 let mapleader=","
 
 " Dash
@@ -87,8 +91,6 @@ let g:pymode_rope_lookup_project=0
 " NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 map <Leader>n :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " ctrlp
