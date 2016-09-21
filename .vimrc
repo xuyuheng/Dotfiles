@@ -26,6 +26,8 @@ Plugin 'embear/vim-localvimrc'
 Plugin 'valloric/youcompleteme'
 Plugin 'scrooloose/syntastic'
 Plugin 'jmcomets/vim-pony'
+" Plugin 'hdima/python-syntax'
+" Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -48,6 +50,8 @@ set nofoldenable
 set noshowmode
 set completeopt-=preview
 set colorcolumn=80
+set splitbelow
+set splitright
 
 " python
 autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
@@ -63,7 +67,6 @@ endif
 
 if has('gui_running')
   set background=dark
-  set guifont=Monaco:h12
   colorscheme solarized
 else
   colorscheme zenburn
@@ -77,9 +80,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-nmap <leader>l :set list!<CR>
-
 let mapleader=","
+
+nmap <leader>l :set list!<CR>
 
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
@@ -91,7 +94,7 @@ let g:pymode_rope_lookup_project=0
 " NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 map <Leader>n :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " ctrlp
 let g:ctrlp_custom_ignore = {
@@ -120,12 +123,12 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_auto_loc_list=1
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=0
 
-let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501'
 
 " YouCompleteMe
