@@ -26,7 +26,8 @@ Plugin 'embear/vim-localvimrc'
 Plugin 'valloric/youcompleteme'
 Plugin 'scrooloose/syntastic'
 Plugin 'jmcomets/vim-pony'
-" Plugin 'hdima/python-syntax'
+" Plugin 'vim-scripts/indentpython.vim'
+Plugin 'hynek/vim-python-pep8-indent'
 " Plugin 'chriskempson/tomorrow-theme', {'rtp': 'vim/'}
 call vundle#end()
 filetype plugin indent on
@@ -54,12 +55,14 @@ set splitbelow
 set splitright
 
 " python
-autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8
-\ formatoptions=croqj softtabstop=4 textwidth=74 comments=:#\:,:#
+" autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4
 let python_highlight_all=1
 
 " vim
-autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=8 softtabstop=2
+autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=4 softtabstop=2
+
+" html
+autocmd FileType html setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4
 
 if has('mouse')
   set mouse=a
