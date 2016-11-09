@@ -15,6 +15,7 @@ Plugin 'glench/vim-jinja2-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'jiangmiao/auto-pairs'
+" Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'jmcomets/vim-pony'
 Plugin 'jnurmine/Zenburn'
 Plugin 'kien/ctrlp.vim'
@@ -28,6 +29,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'sirver/ultisnips'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-surround'
+" Plugin 'tpope/vim-vinegar'
 Plugin 'valloric/youcompleteme'
 call vundle#end()
 filetype plugin indent on
@@ -45,18 +47,24 @@ set history=50	" keep 50 lines of command line history
 set ruler	      " show the cursor position all the time
 set showcmd		  " display incomplete commands
 set incsearch		" do incremental searching
+set ignorecase
 set number
 set clipboard=unnamed
 set nofoldenable
 set noshowmode
-set completeopt-=preview
+" set completeopt-=preview
 set colorcolumn=80
 set splitbelow
 set splitright
+set wildignore+=*.a,*.o
+set wildignore+=*~,*.tmp,*.swp
+set wildignore+=*.ninja
+set wildignore+=*.pyc,*.pyo
+set wildignore+=.DS_Store,.git,.hg,.svn
+set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 
 " vim
 autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-  \ shiftround autoindent
 
 " cpp, c
 autocmd FileType cpp,c setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s 
@@ -81,7 +89,9 @@ if has('mouse')
 endif
 
 if has('gui_running')
+
   set background=dark
+  set guifont=Monaco:h12
   colorscheme solarized
 else
   colorscheme zenburn
@@ -102,21 +112,12 @@ nmap <leader>l :set list!<CR>
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
 
-" Rope
-let g:pymode_rope_goto_definition_cmd='vnew'
-let g:pymode_rope_lookup_project=0
-
 " NERDTree
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+let NERDTreeRespectWildIgnore=1
 map <Leader>n :NERDTreeToggle<CR>
 map <Leader>j :NERDTreeFind<CR>
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree")
   \ && b:NERDTree.isTabTree()) | q | endif
-
-" ctrlp
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll|pyc|pyo)$|\~$' }
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
