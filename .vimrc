@@ -6,27 +6,29 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'rizzatti/dash.vim'
 Plugin 'airblade/vim-gitgutter'
-Plugin 'sirver/ultisnips'
-Plugin 'honza/vim-snippets'
+Plugin 'altercation/vim-colors-solarized'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'tpope/vim-surround'
-Plugin 'mattn/emmet-vim'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'sjl/gundo.vim'
-Plugin 'majutsushi/tagbar'
+Plugin 'embear/vim-localvimrc'
 Plugin 'fisadev/vim-isort'
 Plugin 'glench/vim-jinja2-syntax'
-Plugin 'embear/vim-localvimrc'
-Plugin 'valloric/youcompleteme'
-Plugin 'scrooloose/syntastic'
+Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'jmcomets/vim-pony'
+Plugin 'jnurmine/Zenburn'
+Plugin 'kien/ctrlp.vim'
+Plugin 'majutsushi/tagbar'
+Plugin 'mattn/emmet-vim'
 Plugin 'pbrisbin/vim-mkdir'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'rizzatti/dash.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'sirver/ultisnips'
+Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-surround'
+Plugin 'valloric/youcompleteme'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -56,14 +58,23 @@ set splitright
 autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
   \ shiftround autoindent
 
+" cpp, c
+autocmd FileType cpp,c setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s 
+ \ shiftround autoindent
+
 " python
 autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
   \ shiftround autoindent
-let python_highlight_all=1
 
-" html,css,htmldjango
+" html, css, htmldjango
 autocmd FileType html,css,htmldjango setlocal expandtab shiftwidth=2 tabstop=2
   \ softtabstop=2 shiftround autoindent
+
+" gyp, gypi
+au! BufRead,BufNewFile *.gyp,*.gypi  set filetype=python expandtab tabstop=2
+  \ shiftwidth=2 shiftround autoindent
+
+let python_highlight_all=1
 
 if has('mouse')
   set mouse=a
@@ -98,6 +109,7 @@ let g:pymode_rope_lookup_project=0
 " NERDTree
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 map <Leader>n :NERDTreeToggle<CR>
+map <Leader>j :NERDTreeFind<CR>
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree")
   \ && b:NERDTree.isTabTree()) | q | endif
 
@@ -120,8 +132,8 @@ let g:UltiSnipsExpandTrigger='<C-J>'
 let g:UltiSnipsListSnippets='<C-K>'
 let g:UltiSnipsJumpForwardTrigger='<C-J>'
 let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
-autocmd FileType python set ft=python.django
-autocmd FileType html set ft=html.django
+" autocmd FileType python set ft=python.django
+" autocmd FileType html set ft=html.django
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -153,3 +165,14 @@ let g:surround_{char2nr("i")}="{% if \1condition: \1 %}\r{% endif %}"
 let g:surround_{char2nr("w")}="{% with \1with: \1 %}\r{% endwith %}"
 let g:surround_{char2nr("f")}="{% for \1for loop: \1 %}\r{% endfor %}"
 let g:surround_{char2nr("c")}="{% comment %}\r{% endcomment %}"
+
+" Clang-Format
+map <Leader>c :ClangFormat<CR>
+let g:clang_format#style_options = {
+  \ "AccessModifierOffset" : -4,
+  \ "BasedOnStyle": "Chromium",
+  \ "IndentCaseLabels": "false",
+  \ "IndentWidth": 4,
+  \ "ObjCBlockIndentWidth": 4,
+  \ "SortIncludes": "true", 
+  \}
