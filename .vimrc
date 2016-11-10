@@ -15,7 +15,6 @@ Plugin 'glench/vim-jinja2-syntax'
 Plugin 'honza/vim-snippets'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'jmcomets/vim-pony'
 Plugin 'jnurmine/Zenburn'
 Plugin 'kien/ctrlp.vim'
@@ -29,7 +28,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'sirver/ultisnips'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-surround'
-" Plugin 'tpope/vim-vinegar'
+Plugin 'tpope/vim-vinegar'
 Plugin 'valloric/youcompleteme'
 call vundle#end()
 filetype plugin indent on
@@ -68,19 +67,20 @@ autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " cpp, c
 autocmd FileType cpp,c setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s 
- \ shiftround autoindent
+  \ shiftround autoindent
 
 " python
 autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
   \ shiftround autoindent
+autocmd FileType python setlocal filetype=python.django
 
 " html, css, htmldjango
 autocmd FileType html,css,htmldjango setlocal expandtab shiftwidth=2 tabstop=2
   \ softtabstop=2 shiftround autoindent
 
 " gyp, gypi
-au! BufRead,BufNewFile *.gyp,*.gypi  set filetype=python expandtab tabstop=2
-  \ shiftwidth=2 shiftround autoindent
+au! BufRead,BufNewFile *.gyp,*.gypi setlocal expandtab shiftwidth=2 tabstop=2
+  \ softtabstop=2 shiftround autoindent filetype=python
 
 let python_highlight_all=1
 
@@ -89,9 +89,8 @@ if has('mouse')
 endif
 
 if has('gui_running')
-
   set background=dark
-  set guifont=Monaco:h12
+" set guifont=Monaco:h12
   colorscheme solarized
 else
   colorscheme zenburn
@@ -133,8 +132,6 @@ let g:UltiSnipsExpandTrigger='<C-J>'
 let g:UltiSnipsListSnippets='<C-K>'
 let g:UltiSnipsJumpForwardTrigger='<C-J>'
 let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
-" autocmd FileType python set ft=python.django
-" autocmd FileType html set ft=html.django
 
 " syntastic
 set statusline+=%#warningmsg#
