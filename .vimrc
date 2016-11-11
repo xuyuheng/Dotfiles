@@ -27,6 +27,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'sirver/ultisnips'
 Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'valloric/youcompleteme'
@@ -46,6 +47,7 @@ set history=50	" keep 50 lines of command line history
 set ruler	      " show the cursor position all the time
 set showcmd		  " display incomplete commands
 set incsearch		" do incremental searching
+set hlsearch
 set ignorecase
 set number
 set clipboard=unnamed
@@ -82,6 +84,8 @@ autocmd FileType html,css,htmldjango setlocal expandtab shiftwidth=2 tabstop=2
 au! BufRead,BufNewFile *.gyp,*.gypi setlocal expandtab shiftwidth=2 tabstop=2
   \ softtabstop=2 shiftround autoindent filetype=python
 
+autocmd FileType qf wincmd J
+
 let python_highlight_all=1
 
 if has('mouse')
@@ -103,6 +107,7 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+nnoremap <F7> :set hls!<CR>
 
 let mapleader=","
 
