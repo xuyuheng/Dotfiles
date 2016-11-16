@@ -31,6 +31,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'valloric/youcompleteme'
+Plugin 'vim-airline/vim-airline'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -64,11 +65,15 @@ set wildignore+=*.pyc,*.pyo
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 
+set guioptions-=T
+set guioptions-=L
+set guioptions-=r
+
 " vim
 autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " cpp, c
-autocmd FileType cpp,c setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s 
+autocmd FileType cpp,c,objcpp setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s 
   \ shiftround autoindent
 
 " python
@@ -94,7 +99,7 @@ endif
 
 if has('gui_running')
   set background=dark
-" set guifont=Monaco:h12
+  set guifont=Monaco:h12
   colorscheme solarized
 else
   colorscheme zenburn
@@ -158,6 +163,9 @@ let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_complete_in_comments=1
 let g:ycm_complete_in_strings=1
+let g:ycm_filetype_specific_completion_to_disable = {
+  \ 'objcpp': 1
+  \}
 
 " Sorround
 let g:surround_{char2nr("v")}="{{ \r }}"
