@@ -20,11 +20,11 @@ Plugin 'jnurmine/Zenburn'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'mattn/emmet-vim'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'rizzatti/dash.vim'
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
 Plugin 'sirver/ultisnips'
 Plugin 'sjl/gundo.vim'
 Plugin 'tpope/vim-fugitive'
@@ -32,6 +32,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'valloric/youcompleteme'
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-syntastic/syntastic'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -73,7 +74,7 @@ set guioptions-=r
 autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " cpp, c
-autocmd FileType cpp,c,objcpp setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s 
+autocmd FileType cpp,c,objcpp setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s
   \ shiftround autoindent
 
 " python
