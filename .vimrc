@@ -22,6 +22,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'mattn/emmet-vim'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pbrisbin/vim-mkdir'
+Plugin 'qpkorr/vim-bufkill'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'rizzatti/dash.vim'
 Plugin 'scrooloose/nerdtree'
@@ -69,6 +70,8 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set guioptions-=T
 set guioptions-=L
 set guioptions-=r
+
+set fileencodings=ucs-bom,utf-8,cp936,gb2312,default,latin1
 
 " vim
 autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
@@ -188,3 +191,6 @@ let g:clang_format#style_options = {
   \ "ObjCBlockIndentWidth": 4,
   \ "SortIncludes": "true", 
   \}
+
+" Ctrlp
+let g:ctrlp_working_path_mode=0
