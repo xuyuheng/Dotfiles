@@ -77,6 +77,7 @@ set fileencodings=ucs-bom,utf-8,cp936,gb2312,default,latin1
 autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " cpp, c
+autocmd BufEnter */usr/include/c++/v1/* setlocal filetype=cpp
 autocmd FileType cpp,c,objcpp setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s
   \ shiftround autoindent
 
@@ -133,9 +134,11 @@ autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree")
   \ && b:NERDTree.isTabTree()) | q | endif
 
 " Tagbar
-nmap <F8> :TagbarToggle<CR>
+nmap <F8> :TagbarOpen fj<CR>
+nmap <F9> :TagbarToggle<CR>
 
 " Gundo
+let g:gundo_right=1
 nnoremap <F5> :GundoToggle<CR>
 
 " solarized
