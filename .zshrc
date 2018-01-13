@@ -49,15 +49,13 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git textmate)
 
 # User configuration
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin"
-#
+
 # export MANPATH="/usr/local/man:$MANPATH"
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper.sh
 
 source $ZSH/oh-my-zsh.sh
 
@@ -86,11 +84,23 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-function frameworkpython {
-    if [[ ! -z "$VIRTUAL_ENV" ]]; then
-        PYTHONHOME=$VIRTUAL_ENV /usr/local/bin/python "$@"
-    else
-        /usr/local/bin/python "$@"
-    fi
+bindkey \^U backward-kill-line
+
+alias mh='~/XcodeProjects/macmail'
+alias mmh='~/XcodeProjects/macmail/third_party/mailmaster_framework/src'
+alias mmb='~/XcodeProjects/macmail/third_party/mailmaster_framework/build && python mailmaster_mac.py && ninja -C ../src/chromium/out/Debug && -'
+alias mmc='~/XcodeProjects/macmail/third_party/mailmaster_framework/build && ninja -C ../src/chromium/out/Debug && -'
+alias mpc='~/XcodeProjects/mailmaster/src'
+
+# rbenv
+eval "$(rbenv init -)"
+
+# pyenv
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# function
+function lb() {
+    mate ~/logbook/$(date '+%Y-%m-%d').md
 }
 

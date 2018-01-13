@@ -6,50 +6,68 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'embear/vim-localvimrc'
-Plugin 'fisadev/vim-isort'
-Plugin 'glench/vim-jinja2-syntax'
 Plugin 'honza/vim-snippets'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'jmcomets/vim-pony'
-Plugin 'jnurmine/Zenburn'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'mattn/emmet-vim'
-Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'pbrisbin/vim-mkdir'
 Plugin 'qpkorr/vim-bufkill'
-Plugin 'rhysd/vim-clang-format'
 Plugin 'rizzatti/dash.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sirver/ultisnips'
 Plugin 'sjl/gundo.vim'
-Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'valloric/youcompleteme'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-syntastic/syntastic'
+
+" Themes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'jnurmine/Zenburn'
+
+" Git
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+
+" C-family
+Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'rhysd/vim-clang-format'
+
+" Ruby
+Plugin 'tpope/vim-rails'
+Plugin 'vim-ruby/vim-ruby'
+
+" Python
+" Plugin 'glench/vim-jinja2-syntax'
+" Plugin 'jmcomets/vim-pony'
+Plugin 'fisadev/vim-isort'
+Plugin 'hynek/vim-python-pep8-indent'
+
+" Web
+Plugin 'ap/vim-css-color'
+Plugin 'mattn/emmet-vim'
+Plugin 'pangloss/vim-javascript'
+
+" Deprecated
+" Plugin 'jiangmiao/auto-pairs'
 call vundle#end()
 filetype plugin indent on
 syntax on
 
 if has("vms")
-  set nobackup	" do not keep a backup file, use versions instead
+  set nobackup  " do not keep a backup file, use versions instead
 else
-  set backup		" keep a backup file (restore to previous version)
-  set undofile	" keep an undo file (undo changes after closing)
+  set backup    " keep a backup file (restore to previous version)
+  set undofile  " keep an undo file (undo changes after closing)
 endif
 
 set backspace=indent,eol,start
-set history=50	" keep 50 lines of command line history
-set ruler	      " show the cursor position all the time
-set showcmd		  " display incomplete commands
-set incsearch		" do incremental searching
+set history=50  " keep 50 lines of command line history
+set ruler       " show the cursor position all the time
+set showcmd     " display incomplete commands
+set incsearch   " do incremental searching
 set hlsearch
 set ignorecase
 set number
@@ -66,6 +84,9 @@ set wildignore+=*.ninja
 set wildignore+=*.pyc,*.pyo
 set wildignore+=.DS_Store,.git,.hg,.svn
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+set wildignore+=__pycache__
+set wildignore+=*.sqlite3
+set wildignore+=tmp,bin
 
 set guioptions-=T
 set guioptions-=L
@@ -74,26 +95,32 @@ set guioptions-=r
 set fileencodings=ucs-bom,utf-8,cp936,gb2312,default,latin1
 
 " vim
-autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType vim setlocal expandtab softtabstop=2 shiftwidth=2 shiftround
+  \ autoindent
 
 " cpp, c
 autocmd BufEnter */usr/include/c++/v1/* setlocal filetype=cpp
-autocmd FileType cpp,c,objcpp setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4 cino=(0,N-s
-  \ shiftround autoindent
+autocmd FileType cpp,c,objcpp setlocal cino=(0,N-s expandtab softtabstop=4
+  \ shiftwidth=4 shiftround autoindent
 
 " python
-autocmd FileType python setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType python setlocal expandtab softtabstop=4 shiftwidth=4
   \ shiftround autoindent
 autocmd FileType python setlocal filetype=python.django
 
-" html, css, htmldjango
-autocmd FileType html,css,htmldjango setlocal expandtab shiftwidth=2 tabstop=2
-  \ softtabstop=2 shiftround autoindent
+" ruby
+autocmd FileType ruby setlocal expandtab softtabstop=2 shiftwidth=2 shiftround
+  \ autoindent
+
+" html, css, javascript, htmldjango, eruby
+autocmd FileType html,css,javascript,htmldjango,eruby setlocal expandtab
+  \ softtabstop=2 shiftwidth=2 shiftround autoindent
 
 " gyp, gypi
-au! BufRead,BufNewFile *.gyp,*.gypi setlocal expandtab shiftwidth=2 tabstop=2
-  \ softtabstop=2 shiftround autoindent filetype=python
+au! BufRead,BufNewFile *.gyp,*.gypi setlocal expandtab softtabstop=2
+  \ shiftwidth=2 shiftround autoindent filetype=python
 
+" quickfix window position
 autocmd FileType qf wincmd J
 
 let python_highlight_all=1
@@ -104,7 +131,6 @@ endif
 
 if has('gui_running')
   set background=dark
-  set guifont=Monaco:h12
   colorscheme solarized
 else
   colorscheme zenburn
@@ -121,7 +147,8 @@ nnoremap <F7> :set hls!<CR>
 
 let mapleader=","
 
-nmap <leader>l :set list!<CR>
+nmap <leader>L :set list!<CR>
+nmap =j :%!python -m json.tool<CR>
 
 " Dash
 nmap <silent> <leader>d <Plug>DashSearch
@@ -154,12 +181,10 @@ let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
-
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501'
 
@@ -171,18 +196,21 @@ let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_complete_in_comments=1
 let g:ycm_complete_in_strings=1
 let g:ycm_filetype_specific_completion_to_disable = {
-  \ 'objcpp': 1
+  \ 'gitcommit': 1,
+  \ 'objcpp': 1,
+  \ 'ruby': 1,
   \}
 
-" Sorround
-let g:surround_{char2nr("v")}="{{ \r }}"
-let g:surround_{char2nr("{")}="{{ \r }}"
-let g:surround_{char2nr("%")}="{% \r %}"
-let g:surround_{char2nr("b")}="{% block \1block name: \1 %}\r{% endblock \1\1 %}"
-let g:surround_{char2nr("i")}="{% if \1condition: \1 %}\r{% endif %}"
-let g:surround_{char2nr("w")}="{% with \1with: \1 %}\r{% endwith %}"
-let g:surround_{char2nr("f")}="{% for \1for loop: \1 %}\r{% endfor %}"
-let g:surround_{char2nr("c")}="{% comment %}\r{% endcomment %}"
+" Surround
+" django
+" let g:surround_{char2nr("v")}="{{ \r }}"
+" let g:surround_{char2nr("{")}="{{ \r }}"
+" let g:surround_{char2nr("%")}="{% \r %}"
+" let g:surround_{char2nr("b")}="{% block \1block name: \1 %}\r{% endblock \1\1 %}"
+" let g:surround_{char2nr("i")}="{% if \1condition: \1 %}\r{% endif %}"
+" let g:surround_{char2nr("w")}="{% with \1with: \1 %}\r{% endwith %}"
+" let g:surround_{char2nr("f")}="{% for \1for loop: \1 %}\r{% endfor %}"
+" let g:surround_{char2nr("c")}="{% comment %}\r{% endcomment %}"
 
 " Clang-Format
 map <Leader>c :ClangFormat<CR>
@@ -197,3 +225,4 @@ let g:clang_format#style_options = {
 
 " Ctrlp
 let g:ctrlp_working_path_mode=0
+let g:ctrlp_max_files=0
