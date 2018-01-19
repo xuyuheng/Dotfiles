@@ -17,6 +17,7 @@ Plugin 'rizzatti/dash.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'sirver/ultisnips'
 Plugin 'sjl/gundo.vim'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'valloric/youcompleteme'
@@ -46,8 +47,8 @@ Plugin 'fisadev/vim-isort'
 Plugin 'hynek/vim-python-pep8-indent'
 
 " Web
+" Plugin 'mattn/emmet-vim'
 Plugin 'ap/vim-css-color'
-Plugin 'mattn/emmet-vim'
 Plugin 'pangloss/vim-javascript'
 
 " Deprecated
@@ -78,6 +79,7 @@ set noshowmode
 set colorcolumn=80
 set splitbelow
 set splitright
+set virtualedit=block
 set wildignore+=*.a,*.o
 set wildignore+=*~,*.tmp,*.swp
 set wildignore+=*.ninja
@@ -187,6 +189,8 @@ let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501'
+let g:syntastic_eruby_ruby_quiet_messages =
+    \ {'regex': 'possibly useless use of a variable in void context'}
 
 " YouCompleteMe
 nnoremap <leader>g :YcmCompleter GoTo<CR>
