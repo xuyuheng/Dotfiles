@@ -63,11 +63,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='mvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -90,17 +90,25 @@ alias mh='~/XcodeProjects/macmail'
 alias mmh='~/XcodeProjects/macmail/third_party/mailmaster_framework/src'
 alias mmb='~/XcodeProjects/macmail/third_party/mailmaster_framework/build && python mailmaster_mac.py && ninja -C ../src/chromium/out/Debug && -'
 alias mmc='~/XcodeProjects/macmail/third_party/mailmaster_framework/build && ninja -C ../src/chromium/out/Debug && -'
-alias mpc='~/XcodeProjects/mailmaster/src'
+alias mcgrep="grep -rn --exclude-dir='**/.git' --exclude-dir='**/chromium/out' --exclude=tags --exclude='*~' --exclude='*.swp'"
+alias mmgrep="mcgrep --exclude-dir='**/.git' --exclude-dir='**/chromium'"
 
 # rbenv
 eval "$(rbenv init -)"
 
 # pyenv
 eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+
+# pipenv
+eval "$(pipenv --completion)"
 
 # function
 function lb() {
-    mate ~/logbook/$(date '+%Y-%m-%d').md
+  mate ~/logbook/$(date '+%Y-%m-%d').md
 }
 
+# for c++14
+function myg++() {
+  local output=$(echo "$1" | sed -E 's|\..+$||')
+  g++ -O3 -std=c++14 -o $output $1
+}

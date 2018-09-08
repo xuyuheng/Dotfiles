@@ -6,9 +6,9 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'd11wtq/ctrlp_bdelete.vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'embear/vim-localvimrc'
-Plugin 'honza/vim-snippets'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'pbrisbin/vim-mkdir'
@@ -41,18 +41,19 @@ Plugin 'tpope/vim-rails'
 Plugin 'vim-ruby/vim-ruby'
 
 " Python
-" Plugin 'glench/vim-jinja2-syntax'
-" Plugin 'jmcomets/vim-pony'
-Plugin 'fisadev/vim-isort'
+" Plugin 'fisadev/vim-isort'
 Plugin 'hynek/vim-python-pep8-indent'
+" Plugin 'glench/vim-jinja2-syntax'
 
 " Web
-" Plugin 'mattn/emmet-vim'
 Plugin 'ap/vim-css-color'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'mxw/vim-jsx'
 Plugin 'pangloss/vim-javascript'
 
 " Deprecated
 " Plugin 'jiangmiao/auto-pairs'
+" Plugin 'honza/vim-snippets'
 call vundle#end()
 filetype plugin indent on
 syntax on
@@ -89,6 +90,8 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
 set wildignore+=__pycache__
 set wildignore+=*.sqlite3
 set wildignore+=tmp,bin
+set wildignore+=tags
+set wildignore+=node_modules
 
 set guioptions-=T
 set guioptions-=L
@@ -114,9 +117,9 @@ autocmd FileType python setlocal filetype=python.django
 autocmd FileType ruby setlocal expandtab softtabstop=2 shiftwidth=2 shiftround
   \ autoindent
 
-" html, css, javascript, htmldjango, eruby
-autocmd FileType html,css,javascript,htmldjango,eruby setlocal expandtab
-  \ softtabstop=2 shiftwidth=2 shiftround autoindent
+" web
+autocmd FileType html,css,sass,scss,javascript,coffee,htmldjango,eruby
+  \ setlocal expandtab softtabstop=2 shiftwidth=2 shiftround autoindent
 
 " gyp, gypi
 au! BufRead,BufNewFile *.gyp,*.gypi setlocal expandtab softtabstop=2
@@ -157,8 +160,8 @@ nmap <silent> <leader>d <Plug>DashSearch
 
 " NERDTree
 let NERDTreeRespectWildIgnore=1
-map <Leader>n :NERDTreeToggle<CR>
-map <Leader>j :NERDTreeFind<CR>
+map <leader>n :NERDTreeToggle<CR>
+map <leader>j :NERDTreeFind<CR>
 autocmd BufEnter * if (winnr("$") == 1 && exists("b:NERDTree")
   \ && b:NERDTree.isTabTree()) | q | endif
 
@@ -167,7 +170,7 @@ nmap <F8> :TagbarOpen fj<CR>
 nmap <F9> :TagbarToggle<CR>
 
 " Gundo
-let g:gundo_right=1
+let g:gundo_prefer_python3=1
 nnoremap <F5> :GundoToggle<CR>
 
 " solarized
@@ -175,9 +178,11 @@ call togglebg#map('<F6>')
 
 " UltiSnips
 let g:UltiSnipsExpandTrigger='<C-J>'
-let g:UltiSnipsListSnippets='<C-K>'
 let g:UltiSnipsJumpForwardTrigger='<C-J>'
-let g:UltiSnipsJumpBackwardTrigger='<C-Z>'
+let g:UltiSnipsJumpBackwardTrigger='<C-K>'
+let g:UltiSnipsListSnippets='<C-L>'
+let g:UltiSnipsEditSplit='horizontal'
+let g:UltiSnipsSnippetsDir=$HOME.'/.vim/UltiSnips'
 
 " syntastic
 set statusline+=%#warningmsg#
@@ -189,8 +194,12 @@ let g:syntastic_check_on_open=1
 let g:syntastic_check_on_wq=0
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_flake8_args='--ignore=E501'
-let g:syntastic_eruby_ruby_quiet_messages =
-    \ {'regex': 'possibly useless use of a variable in void context'}
+let g:syntastic_eruby_ruby_quiet_messages = {
+    \ 'regex': 'possibly useless use of a variable in void context',
+    \}
+let g:syntastic_scss_sass_quiet_messages = {
+    \ 'regex': 'File to import not found or unreadable',
+    \}
 
 " YouCompleteMe
 nnoremap <leader>g :YcmCompleter GoTo<CR>
@@ -203,21 +212,11 @@ let g:ycm_filetype_specific_completion_to_disable = {
   \ 'gitcommit': 1,
   \ 'objcpp': 1,
   \ 'ruby': 1,
+  \ 'railslog': 1,
   \}
 
-" Surround
-" django
-" let g:surround_{char2nr("v")}="{{ \r }}"
-" let g:surround_{char2nr("{")}="{{ \r }}"
-" let g:surround_{char2nr("%")}="{% \r %}"
-" let g:surround_{char2nr("b")}="{% block \1block name: \1 %}\r{% endblock \1\1 %}"
-" let g:surround_{char2nr("i")}="{% if \1condition: \1 %}\r{% endif %}"
-" let g:surround_{char2nr("w")}="{% with \1with: \1 %}\r{% endwith %}"
-" let g:surround_{char2nr("f")}="{% for \1for loop: \1 %}\r{% endfor %}"
-" let g:surround_{char2nr("c")}="{% comment %}\r{% endcomment %}"
-
 " Clang-Format
-map <Leader>c :ClangFormat<CR>
+map <leader>c :ClangFormat<CR>
 let g:clang_format#style_options = {
   \ "AccessModifierOffset" : -4,
   \ "BasedOnStyle": "Chromium",
@@ -230,3 +229,15 @@ let g:clang_format#style_options = {
 " Ctrlp
 let g:ctrlp_working_path_mode=0
 let g:ctrlp_max_files=0
+let g:ctrlp_extensions = ['quickfix', 'bookmarkdir' ]
+let g:ctrlp_custom_ignore = '\v[\/]public/packs'
+call ctrlp_bdelete#init()
+
+" Rails
+let g:rails_ctags_arguments = ['--field=+l', '--languages=Ruby', '--exclude=.git',  "--exclude='*~'", "--exclude='*.swp'"]
+
+" Commands
+command! -nargs=+ -complete=file MCgrep :execute "grep -rn --exclude-dir='**/chromium/out' --exclude=tags --exclude='*~' --exclude='*.swp' <args>"
+command! -nargs=+ -complete=file MCgrepadd :execute "grepadd -rn --exclude-dir='**/chromium/out' --exclude=tags --exclude='*~' --exclude='*.swp' <args>"
+command! -nargs=+ -complete=file MMgrep :execute "grep -rn --exclude-dir='**/chromium/out' --exclude=tags --exclude='*~' --exclude='*.swp' --exclude-dir='**/chromium' <args>"
+command! -nargs=+ -complete=file MMgrepadd :execute "grepadd -rn --exclude-dir='**/chromium/out' --exclude=tags --exclude='*~' --exclude='*.swp' --exclude-dir='**/chromium' <args>"
